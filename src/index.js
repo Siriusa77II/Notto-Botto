@@ -1,5 +1,5 @@
-const { Client, GatewayIntentBits } = require("discord.js");
-const { readFileSync } = require("fs");
+const { Client, GatewayIntentBits, Collection } = require("discord.js");
+const { readFileSync, readdirSync } = require("fs");
 const path = require("path");
 const token = require("../config.json");
 const client = new Client({
@@ -18,6 +18,16 @@ for (const file of eventFiles) {
     } else {
         client.on(event.name, (...args) => execute(client, ...args));
     }
+}
+
+// Command Handler
+client.commands = new Collection();
+const commandPath = path.join(__dirname, "Commands");
+const commandFiles = readdirSync(commandPath).filter(file => file.endsWith(".js"));
+for (const file of commandFiles) {
+    const filePath = path.join(commandPath, file);
+    const command = require(filePath);
+    client.commands.set(command.data.name, command);
 }
 
 client.login(token)
