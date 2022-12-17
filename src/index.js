@@ -1,32 +1,23 @@
-const { Client, GatewayIntentBits, Collection } = require("discord.js");
+const { Client, GatewayIntentBits } = require("discord.js");
+const { readFileSync } = require("fs");
+const path = require("path");
 const token = require("../config.json");
 const client = new Client({
     allowedMention: { parse: [ "users", "roles" ]},
     intents: [ GatewayIntentBits.Guilds ]
 });
 
-client.on("ready", (client) => {
-    console.log(`Logged in as ${client.user.tag}!`)
-});
-
-client.on("interactionCreate", async (interaction) => {
-    if(!interaction.isChatInputCommand()) return;
-    const { commandName } = interaction;
-    switch (commandName) {
-        case "ping":
-            interaction.reply("Pong!")
-            break;
-        case "server":
-            interaction.reply(`This server is called ${interaction.guild.name} and has ${interaction.guild.memberCount}members!`)
-            break
-        case "user": 
-        interaction.reply(`You are ${interaction.author.tag} and you are ${interaction.author.bot ? "a bot" : "not a bot" }!`)
-            break
-        default:
-            interaction.reply(`Unkinown Command \`${commandName}\``)
-            break;
+// Event Handler
+const eventPath = path.join(__dirname, "Events");
+const eventFiles = readFileSync(eventPath).filter(file => file.endsWith(".js"));
+for (const file of eventFiles) {
+    const filePath = path.join(eventPath, file);
+    const event = require(filePath);
+    if(event.once) {
+        client.once(event.name, (...args) => execute(client, ...args))
+    } else {
+        client.on(event.name, (...args) => execute(client, ...args));
     }
-})
-
+}
 
 client.login(token)
