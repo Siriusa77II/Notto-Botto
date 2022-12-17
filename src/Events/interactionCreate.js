@@ -9,7 +9,12 @@ module.exports = {
             channel.send(inputMessage);
             interaction.reply({ content: "Message Sent!", ephemeral: true });
         }
-        
+        // Select Menu Submit
+        if(interaction.isSelectMenu()){
+            const selection = interaction.values[0];
+            
+            return interaction.update({ content: `You have selected ${selection}`, components: []})
+        }
         // Slash commands Handler
         if(!interaction.isChatInputCommand()) return;
     const { commandName } = interaction;
