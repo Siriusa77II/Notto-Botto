@@ -22,7 +22,7 @@ La chaine est un passe temps, et je ne peux pas me permettre de faire des videos
 Je tourne, monte et upload quand je peux, mais il depend aussi des projet de la societe ou je travaille, et de la charge de travaille que j'ai.  
 Bien souvant, je sort du bureau a 20:00 (JST). et apres avoirs coder toute la journer, ce n'est pas forcement ce que j'ai envie de faire une fois a la maison.  
 
-## Japanese:
+## 日本語
 これは、私のサイドチャンネル「Sirius」または@\SiriusDevでYouTubeにアップロードされたビデオシリーズ用に作成されたDiscordボットです。
 [プレイリストへのリンク](https://www.youtube.com/playlist?list=PLRKst53s2MrgshSyzlL9sMtfe9o-tk6Wp)  
   
